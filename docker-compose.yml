@@ -1,0 +1,213 @@
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "8443:8443"
+    environment:
+      - IP_ADDRESS=${IP_ADDRESS}
+      - GAME_CONNECTION_TIMEOUT=${GAME_CONNECTION_TIMEOUT}
+    networks:
+      - net
+    depends_on:
+      - auth-service
+      - game-service
+      - user-management
+      - matchmaker-service
+
+  auth-service:
+    container_name: auth-service
+    build:
+      context: ./auth_service
+      args:
+        - DEV=${DEV:-false}
+    ports:
+      - "8001"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - PONG_OAUTH_UID=${PONG_OAUTH_UID}
+      - PONG_OAUTH_42_SECRET=${PONG_OAUTH_42_SECRET}
+      - AUTH_SERVICE_SECRET_KEY=${AUTH_SERVICE_SECRET_KEY}
+      - IP_ADDRESS=${IP_ADDRESS}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - net
+
+  game-service:
+    container_name: game-service
+    build:
+      context: ./game_service
+      args:
+        - DEV=${DEV:-false}
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - GAME_CONNECTION_TIMEOUT=${GAME_CONNECTION_TIMEOUT}
+      - GAME_SERVICE_SECRET_KEY=${GAME_SERVICE_SECRET_KEY}
+      - MATCHMAKER_SERVICE_API_KEY=${MATCHMAKER_SERVICE_API_KEY}
+      - IP_ADDRESS=${IP_ADDRESS}
+    ports:
+      - "8000"
+    networks:
+      - net
+
+  db:
+    container_name: db
+    image: postgres:16.3-alpine3.19
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - net
+    restart:
+      unless-stopped
+
+  user-management:
+    container_name: user-management
+    build:
+      context: ./user_management
+      args:
+        - DEV=${DEV:-false}
+    ports:
+      - "8003:8003"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - PONG_OAUTH_42_SECRET=${PONG_OAUTH_42_SECRET}
+      - USER_MANAGEMENT_SECRET_KEY=${USER_MANAGEMENT_SECRET_KEY}
+      - MATCHMAKER_SERVICE_API_KEY=${MATCHMAKER_SERVICE_API_KEY}
+      - IP_ADDRESS=${IP_ADDRESS}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - net
+    volumes:
+      - media:/user_management/media
+
+  matchmaker-service:
+    container_name: matchmaker-service
+    build:
+      context: ./matchmaker_service
+      args:
+        - DEV=${DEV:-false}
+    ports:
+      - "8002"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - MATCHMAKER_SERVICE_SECRET_KEY=${MATCHMAKER_SERVICE_SECRET_KEY}
+      - MATCHMAKER_SERVICE_API_KEY=${MATCHMAKER_SERVICE_API_KEY}
+      - IP_ADDRESS=${IP_ADDRESS}
+    depends_on:
+      - db
+      - auth-service
+      - user-management
+    networks:
+      - net
+
+  translation-service:
+    container_name: translation-service
+    build:
+      context: ./translation_service
+      args:
+        - DEV=${DEV:-false}
+    ports:
+      - "8004"
+    environment:
+      - TRANSLATION_SERVICE_SECRET_KEY=${TRANSLATION_SERVICE_SECRET_KEY}
+      - IP_ADDRESS=${IP_ADDRESS}
+    networks:
+      - net
+
+  elasticsearch:
+    container_name: elasticsearch
+    build:
+      context: ./elasticsearch
+    environment:
+      - KIBANA_PASSWORD=${KIBANA_PASSWORD}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTICSEARCH_KEYSTORE_PASSWORD=${ELASTICSEARCH_KEYSTORE_PASSWORD}
+      - IP_ADDRESS=${IP_ADDRESS}
+      - discovery.type=single-node
+    ports:
+      - "9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    depends_on:
+      - kibana
+    networks:
+      - net
+    logging:
+      driver: "none"
+
+  logstash:
+    container_name: logstash
+    build:
+      context: ./logstash
+    environment:
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - IP_ADDRESS=${IP_ADDRESS}
+    ports:
+      - "5044"
+    depends_on:
+      - elasticsearch
+    networks:
+      - net
+    logging:
+      driver: "none"
+
+  kibana:
+    container_name: kibana
+    build:
+      context: ./kibana
+    environment:
+      - KIBANA_PASSWORD=${KIBANA_PASSWORD}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - IP_ADDRESS=${IP_ADDRESS}
+      - LOGGING_LEVEL=warn
+      - LOGGING_VERBOSE=false
+    ports:
+      - "5601"
+    networks:
+      - net
+    logging:
+      driver: "none"
+
+networks:
+  net:
+
+volumes:
+  db_data:
+  es_data:
+  media:

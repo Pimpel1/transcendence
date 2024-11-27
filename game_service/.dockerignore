@@ -1,0 +1,10 @@
+.docker
+
+game_service/__pycache__/
+game_service/*/__pycache__/
+game_service/*/*/__pycache__/
+game_service/*/*/*/__pycache__/
+
+.env/
+.venv/
+venv/

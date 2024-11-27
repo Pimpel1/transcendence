@@ -1,0 +1,473 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #161111;
+}
+
+.navbar {
+    background:#30352e;
+    font-family: 'Press Start 2P', cursive;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 62px;
+    z-index: 1999;
+}
+
+.nav-link,
+.navbar-brand {
+    color: #fff;
+    cursor: pointer;
+}
+
+.nav-link {
+    margin-right: 1em !important;
+    font-size: 14px;
+}
+
+.nav-link:hover {
+    color: #000;
+}
+
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
+.navbar-brand img {
+    width: 25px;
+    height: 25px;
+    display: block;
+    margin-left: 10px;
+}
+
+.nav-link.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-menu {
+    background-color: #30352e; /* Match this with your dropdown items' background */
+    border: none; /* Remove the default border */
+    padding: 0; /* Remove any padding if needed */
+}
+
+.dropdown-item {
+    cursor: pointer;
+    border: 1px solid #373834; /* Border color */
+    background-color: #959691; /* Background color */
+    color: #373834; /* Text color */
+}
+
+/* Hover state */
+.dropdown-item:hover {
+    background-color: #373834; /* Background color on hover */
+    border-color: #959691; /* Border color on hover */
+    color: #959691; /* Text color on hover */
+}
+
+/* Focus state */
+.dropdown-item:focus {
+    box-shadow: 0 0 0 0.2rem #268fff80; /* Focus shadow */
+}
+
+#spinner-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#main-content {
+    padding: 0;
+    margin: 0;
+}
+
+.home {
+    background-image: url('../images/home-background.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.flex-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.description {
+    left: 50%;
+    position: absolute;
+    top: 45%;
+    transform: translate(-50%, -55%);
+    text-align: center;
+}
+.description h1 {
+    color: #b2b4b1;
+}
+
+.blinking-text {
+    font-family: 'Press Start 2P', cursive;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.description button {
+    border:1px solid #ffffff;
+    background:#70746e;
+    border-radius: 0;
+    color:#534747;
+}
+.description button:hover {
+    border:1px solid #fff;
+    background:#fff;
+    color:#000;
+}
+
+.features {
+    margin: 4em auto;
+    padding: 1em;
+    position: relative;
+}
+.feature-title {
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+.features img {
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    margin-bottom: 16px;
+}
+
+.card {
+    border-radius: 8px;
+    overflow: hidden;
+    width:auto;
+    min-width: 257px;
+    max-width: 66vw;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.dynamic-size {
+    width: 100%;  /* 2/3 of the viewport width */
+    height: 66vh; /* 2/3 of the viewport height */
+    resize: none; /* Prevent manual resizing */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.card-body {
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.text-center a {
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.oauth-button {
+    background-color: #28a745;
+    color: white;
+    width: 100%;
+    margin-bottom: 15px;
+    border: none;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 0.25rem;
+}
+
+.oauth-button:hover {
+    background-color: #218838;
+}
+
+.oauth-button:active {
+    background-color: #1e7e34;
+}
+
+.oauth-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+.two-factor-auth {
+    background-image: url('../images/home-background.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.custom-card {
+    background-color: #cdcfcd;
+    min-width: 462px;
+    max-width: 462px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
+    color: #585a4e;
+}
+
+.card-title {
+    font-size: 18px;
+}
+
+.custom-card .form-group {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.custom-card .form-group input::placeholder {
+    font-size: 0.8rem;
+    color: #71726c;
+}
+
+.custom-card .btn {
+    width: 100%;
+}
+
+.arena{
+    margin-top: 20px;
+    margin-left: 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color: #81837b;
+}
+
+.arena h1{
+    font-size: 25px;
+}
+
+.listing-card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.listing-card {
+    font-family: 'Press Start 2P', cursive;
+    width: 700px;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 1rem rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.listing-card-header {
+    background-color: #71726c;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.listing-card-header h4 {
+    font-size: 1.2rem;
+}
+
+.list-group {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+
+
+.list-group .list-group-item {
+    cursor: pointer;
+    border: 1px solid #373834;
+    background-color: #959691;
+    border-radius: 0.25rem;
+    padding: 10px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    color: #373834;
+    text-decoration: none;
+}
+
+.list-group-item:hover {
+    background-color: #373834;
+    border-color: #959691;
+    color: #959691;
+    text-decoration: none;
+}
+
+.list-group-item:focus {
+    box-shadow: 0 0 0 0.2rem #268fff80;
+}
+/* Arena */
+
+.centered {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+
+.avatar-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    font-size: 1.5em;
+}
+
+.red-box {
+    background-color: red;
+}
+
+.green-box {
+    background-color: green;
+}
+
+#mainContentWrapper {
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    min-width: 100%;
+    background-image: url('../images/home-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    font-family: 'Press Start 2P', cursive;
+    margin-top: 62px;
+}
+
+.description-arena {
+    left: 50%;
+    position: absolute;
+    top: 45%;
+    transform: translate(-50%, -55%);
+    text-align: center;
+}
+
+.description-arena h1 {
+    font-size: 5vw;
+}
+
+.description-arena button {
+    width: 20vw;
+    padding: 20px;
+    font-size: 1.5rem;
+    margin-top: 15px;
+}
+
+/* Popping button */
+
+.overlay-button {
+    position: fixed;
+    top: 7%;
+    left: 3%;
+    height: auto;
+    width: 10%;
+    padding: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1vw;
+    border: 1px solid #ffffff;
+    background: #ae7272;
+    border-radius: 10px;
+    color: #000000;
+    cursor: pointer;
+    z-index: 1000;
+    text-align: center;
+    overflow: hidden;
+}
+
+.fill-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background-color: #5a0000aa;
+    animation: fillAnimation 10s linear forwards;
+}
+
+/* Keyframes for the fill animation */
+@keyframes fillAnimation {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+.overlay-button:hover {
+    border: 1px solid #fff;
+    background: #fff;
+    color: #000;
+}
+
+#profileCard {
+    min-height: 490px;
+    position: relative;
+}
+
+.customList {
+    min-height: 120px;
+    min-width: 457px;
+}

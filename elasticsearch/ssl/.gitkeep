@@ -1,0 +1,5 @@
+this folder should contain:
+
+- elasticsearch.crt
+- elasticsearch.key
+- elasticsearch.p12

@@ -1,0 +1,5 @@
+this folder should contain:
+
+- kibana.crt
+- kibana.key
+- elasticsearch.crt

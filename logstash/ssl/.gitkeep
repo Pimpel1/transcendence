@@ -1,0 +1,5 @@
+this folder should contain:
+
+- logstash.crt
+- logstash.key
+- elasticsearch.crt

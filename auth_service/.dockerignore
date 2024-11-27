@@ -1,0 +1,11 @@
+.docker
+Dockerfile
+
+auth_service/__pycache__/
+auth_service/*/__pycache__/
+auth_service/*/*/__pycache__/
+auth_service/*/*/*/__pycache__/
+
+.env/
+.venv/
+venv/

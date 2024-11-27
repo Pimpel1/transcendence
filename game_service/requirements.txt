@@ -1,0 +1,6 @@
+Django>=4.2,<4.3
+django-cors-headers>=4.4.0,<4.5
+psycopg>=3.1.8,<3.2
+uvicorn[standard]
+channels>=4.1.0,<4.2
+channels-redis>=4.2.0,<4.3
